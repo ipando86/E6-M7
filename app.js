@@ -1,11 +1,18 @@
+require('dotenv').config();
+
 const { Sequelize } = require('sequelize');
 
-// 1. Configuración de la conexión a PostgreSQL (Ajusta tus credenciales)
-const sequelize = new Sequelize('postgres', 'postgres', 'postgres', {
-  host: 'localhost',
-  dialect: 'postgres',
-  logging: false // Puesto en false para mantener la consola limpia
-});
+// 1. Configuración de la conexión a PostgreSQL usando variables de entorno
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
+    logging: false // Puesto en false para mantener la consola limpia
+  }
+);
 
 // 2. Importar e inicializar los modelos
 const Usuario = require('./models/usuario')(sequelize);
